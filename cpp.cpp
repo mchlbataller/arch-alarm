@@ -5,18 +5,7 @@
 #include <cstdlib>
 #include <cstdio>
 using namespace std;
-/*
- *	
- *	I. foreWarning
- *		
- *	II. alarmGUI
- * *
- *	III. alarmActivator
- *		
- *	IV. snoozeGUI
- *
- *	V. snoozeActivator
- */
+
 
 int main()
 {
@@ -25,16 +14,43 @@ int main()
 	// Located at foreWarning.cpp
 	foreWarning();	
 
+	// Set volume
+	int volume;
+	cout << "Volume (0-175  min: 50 max: 175): ";
+	cin >> volume;
+
+
+
 	// Alarm functions start here.
 	// These functions are located on alarm.cpp.
+	cout << "A. Set minutes for countdown \nB. Set specific date and time";
+	char var;	cin >> var;
+
+	switch(var)
+	{
+		case 'a': alarmMinGUI(); alarmConfMin(volume); break;	// If the user wants to set minutes	
+		case 'A': alarmMinGUI(); alarmConfMin(volume); break;
+		case 'b': alarmDateGUI(); alarmConfDate(volume); break;	// If the user wants date
+		case 'B': alarmDateGUI(); alarmConfDate(volume); break;
+		default: cout << "Wrong input"; break;
+	}
 	
-	
-	// Activate the alarm through writing to the file.
-	alarmGUI();
-	alarmActivator();		
-	
-	for(;;)
+	// Initialize alarm
+	initAlarm();	
+
+	// Snooze function.
+	// Can be found on snooze.cpp file.
+	for(char repeatVar;;)
+	{
 		snoozeGUI();
+		initSnooze(volume);
+	}
+
+	// End the program
+	system("cat quotes");
+	cout << endl;
+	system("rm -rf snooze.sh && rm -rf rtcwake.sh");
+		
 
 	return 0;
 }

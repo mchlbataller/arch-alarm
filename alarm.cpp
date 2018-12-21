@@ -6,59 +6,83 @@
 
 using namespace std;
 
-int day;
-int hour, minutes;
+// For setting the date, hour, and minute
+int day,
+    hour,
+    minute;
 
-void alarmGUI()
+
+void alarmMinGUI();
+void alarmConfMin();
+void alarmDateGUI();
+void alarmConfDate();
+void initAlarm();
+
+
+// GUI for Minutes Countdown
+void alarmMinGUI()
 {
-	cout << "Input the day you want the alarm to trigger: ";
-	cin >> day;
-	/* 
-	 * 	Following has been removed due to the blocked dependency
-		cout << "\nInput the hour: ";
-		cin >> hour;
-	*/
 	cout << "\nInput the minute: ";
-	cin >> minutes;
+	cin >> minute;
 	return;	
 }
 
 
 
-
-void alarmActivator()
+// Configure the alarm through minute countdown
+void alarmConfMin(int volume)
 {
 	ofstream alarm("rtcwake.sh");
 	
 	alarm << "#!/bin/bash" << endl << endl
-		<< "pactl set-sink-volume 0 175%" << endl
-			
-			// NOTE: Removed due to bugs
-			// << "rtcwake -m mem --local --date '2018-12-" << day << " " << hour << ":" << minutes
-		<< "rtcwake -m mem -s " << minutes
-		<< " && " << "vlc-wrapper /home/michael/Music/alarm.mp3 --loop" << endl;
-
-		/* 
-		 *	NOTE: REMOVED DUE TO CAPABILITY PROBLEMS
-		 * 	
-		 * 	if (today == 1)		//set params if today
-		 *		system("date --date 'today' +%Y-%m-%d >> rtcwake.txt");
-		 *	else 
-		 *		system("date --date 'tomorrow' +%Y-%m-%d >> rtcwake.sh");
-		 *
-		 *
-		 *	cout << today;
-		 */
+		<< "pactl set-sink-volume 0 " << volume << "%" << endl
+		<< "pactl set-sink-mute 0 0" << endl
+		<< "rtcwake -m mem -s " << minute * 60		// Minutes to seconds conversion
+		<< " && " << "vlc-wrapper /home/michael/Music/alarm.mp3 --loop > logs" << endl;
 
 
-	//Close the file
-		alarm.close();	
+	alarm.close();	
+	return;
+}
+
+
+void alarmDateGUI()
+{
+	cout << "Set the date and time \n\nDay: ";
+	cin >> day;
+	cout << "Hour (24h): ";
+	cin >> hour;
+	cout << "Minute: ";
+	cin >> minute;
+
+	return;
+}
+
+void alarmConfDate(int volume)
+{
+	ofstream alarm("rtcwake.sh");
+
+	alarm << "#!/bin/bash" << endl
+	       // Unmute
+	       << "pactl set-sink-mute 0 0" << endl 
+	       // Set volume
+	       << "pactl set-sink-volume 0 " << volume << "%" << endl
+	       // Main rtcwake command 	       
+	       << "rtcwake -m mem --local --date '2018-12-" << day << " " << hour << ":" << minute << "' && "
+	       << "vlc-wrapper /home/michael/Music/alarm.mp3 --loop >> logs.txt";
+
+	alarm.close();
+}
+
+void initAlarm()
+{
 	//Set the permissions
 		system("chmod +x rtcwake.sh");
 	//then run;
 		cout << "Initiating alarm..." << endl << endl;
 		system("sleep 2");
 		system("./rtcwake.sh");
+
 
 	//Ending spaces.
 	cout << endl << endl << endl << endl;

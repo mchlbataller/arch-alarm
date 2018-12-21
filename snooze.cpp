@@ -17,17 +17,17 @@ void snoozeGUI()
 	       << "(Y/N): ";
 	cin >> temp;
 
-	if (temp == 'Y' || temp == 'y')
-		snoozeActivator();
-	else exit (0);
+	if (temp == 'N' || temp == 'n')
+		exit(0);
+	
 	return;
 }
 
-void snoozeActivator()
+void initSnooze(int volume)
 {
 	ofstream snooze("snooze.sh");
 	snooze << "#!/bin/bash" << endl
-	       << "pactl set-sink-volume 0 175%" << endl 
+	       << "pactl set-sink-volume 0 " << volume << "%" << endl 
 	       << "rtcwake -m mem -s 60 && vlc-wrapper /home/michael/Music/alarm.mp3 --loop";
 
 	snooze.close();
