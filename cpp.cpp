@@ -46,10 +46,7 @@ int main()
 		initSnooze(volume);
 	}
 
-	// End the program
-	system("cat quotes");
-	cout << endl;
-	system("rm -rf snooze.sh && rm -rf rtcwake.sh");
+
 		
 
 	return 0;

@@ -12,14 +12,19 @@ void snoozeActivator();
 void snoozeGUI()
 {
 	system("clear");
-	char temp;
+	char temp;	
 	cout << "Do you want to snooze?" << endl
 	       << "(Y/N): ";
 	cin >> temp;
 
 	if (temp == 'N' || temp == 'n')
+	{
+		// Exit by printing the motivation and
+		// deleting the files.
+		system("cat quotes");
+		system("rm -rf rtcwake.sh && rm -rf snooze.sh");
 		exit(0);
-	
+	}
 	return;
 }
 
