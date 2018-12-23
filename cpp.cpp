@@ -9,20 +9,22 @@ using namespace std;
 
 int main()
 {
-
-	// Function for warning user to run sudo.
-	// Located at foreWarning.cpp
+	// Warn user to run program as root.
 	foreWarning();	
 
+	// Display date
+	system("date");
+
 	// Set volume
-	int volume;
-	cout << "Volume (0-175  min: 50 max: 175): ";
-	cin >> volume;
+	int volume = 175;
+	/* Removed the following due to inconvenience.
+	 *
+	 * cout << "Volume (0-175  min: 50 max: 175): ";
+	 * cin >> volume;
+	 *
+	 */
 
-
-
-	// Alarm functions start here.
-	// These functions are located on alarm.cpp.
+	// Choice if using rtcwake -s or rtcwake --date
 	cout << "A. Set minutes for countdown \nB. Set specific date and time";
 	char var;	cin >> var;
 
@@ -39,15 +41,11 @@ int main()
 	initAlarm();	
 
 	// Snooze function.
-	// Can be found on snooze.cpp file.
 	for(char repeatVar;;)
 	{
 		snoozeGUI();
 		initSnooze(volume);
 	}
-
-
-		
 
 	return 0;
 }

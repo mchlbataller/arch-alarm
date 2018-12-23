@@ -38,7 +38,7 @@ void alarmConfMin(int volume)
 		<< "pactl set-sink-volume 0 " << volume << "%" << endl
 		<< "pactl set-sink-mute 0 0" << endl
 		<< "rtcwake -m mem -s " << minute * 60		// Minutes to seconds conversion
-		<< " && " << "vlc-wrapper /home/michael/Music/alarm.mp3 --loop > logs" << endl;
+		<< " && " << "vlc-wrapper alarm.mp3 --loop > logs" << endl;
 
 
 	alarm.close();	
@@ -69,7 +69,7 @@ void alarmConfDate(int volume)
 	       << "pactl set-sink-volume 0 " << volume << "%" << endl
 	       // Main rtcwake command 	       
 	       << "rtcwake -m mem --local --date '2018-12-" << day << " " << hour << ":" << minute << "' && "
-	       << "vlc-wrapper /home/michael/Music/alarm.mp3 --loop >> logs.txt";
+	       << "vlc-wrapper alarm.mp3 --loop >> logs.txt";
 
 	alarm.close();
 }
