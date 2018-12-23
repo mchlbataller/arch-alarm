@@ -4,6 +4,8 @@
 #include "snooze.cpp"
 #include <cstdlib>
 #include <cstdio>
+#include <curses.h>
+
 using namespace std;
 
 
@@ -19,14 +21,14 @@ int main()
 	int volume = 175;
 	/* Removed the following due to inconvenience.
 	 *
-	 * cout << "Volume (0-175  min: 50 max: 175): ";
+	 * cout << "\n\n\nVolume (0-175  min: 50 max: 175): ";
 	 * cin >> volume;
 	 *
 	 */
 
 	// Choice if using rtcwake -s or rtcwake --date
-	cout << "A. Set minutes for countdown \nB. Set specific date and time";
-	char var;	cin >> var;
+	cout << "\n\nA. Set minutes for countdown \nB. Set specific date and time";
+	char var;	var = getchar();
 
 	switch(var)
 	{
