@@ -1,1 +1,1 @@
-# arch -alarm
+# arch-alarm
